@@ -1,0 +1,1077 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Encuestas ULEAM</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
+    />
+  </head>
+  <body>
+    <!-- ══════════════ LOGIN ══════════════ -->
+    <div id="screen-login" class="screen active">
+      <div class="login-bg">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
+      </div>
+      <div class="login-card">
+        <div class="login-logo">
+          <div class="logo-mark"><i class="ti ti-school"></i></div>
+          <div>
+            <span class="login-app-name">Encuestas ULEAM</span>
+            <span class="login-uni-name"
+              >Universidad Laica Eloy Alfaro de Manabí</span
+            >
+          </div>
+        </div>
+        <h1 class="login-heading">Bienvenido</h1>
+        <p class="login-sub">
+          Ingresa con tu correo institucional para acceder al sistema de
+          encuestas.
+        </p>
+        <form id="login-form" novalidate>
+          <div class="field-group">
+            <label class="field-label" for="login-email"
+              >Correo institucional <span class="req">*</span></label
+            >
+            <div class="input-wrap">
+              <i class="ti ti-mail input-icon"></i>
+              <input
+                type="email"
+                id="login-email"
+                class="field-input"
+                placeholder="nombre@live.uleam.edu.ec"
+                autocomplete="email"
+              />
+            </div>
+            <span class="field-error" id="error-email" role="alert"></span>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="login-password"
+              >Contraseña <span class="req">*</span></label
+            >
+            <div class="input-wrap">
+              <i class="ti ti-lock input-icon"></i>
+              <input
+                type="password"
+                id="login-password"
+                class="field-input"
+                placeholder="••••••••"
+                autocomplete="current-password"
+              />
+              <button
+                type="button"
+                class="pwd-toggle"
+                id="pwd-toggle"
+                aria-label="Mostrar u ocultar contraseña"
+              >
+                <i class="ti ti-eye"></i>
+              </button>
+            </div>
+            <span class="field-error" id="error-password" role="alert"></span>
+            <span class="field-hint"
+              >Debe iniciar con mayúscula y tener mínimo 8 caracteres.</span
+            >
+          </div>
+          <div class="login-opts">
+            <label class="checkbox-label"
+              ><input type="checkbox" id="remember-me" /> Recordarme</label
+            >
+            <a href="#" class="link-text">¿Olvidaste tu contraseña?</a>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" id="btn-login">
+            Ingresar al sistema <i class="ti ti-arrow-right"></i>
+          </button>
+        </form>
+        <p class="login-footer-text">
+          ¿Problemas para ingresar?
+          <a href="#" class="link-text">Contacta soporte TI ULEAM</a>
+        </p>
+        <div class="demo-bar">
+          <span class="demo-bar-lbl">Acceso rápido (demo):</span>
+          <button class="demo-btn" data-role="student">Estudiante</button>
+          <button class="demo-btn" data-role="teacher">Docente</button>
+          <button class="demo-btn" data-role="worker">Trabajador ULEAM</button>
+          <button class="demo-btn" data-role="sysadmin">Administrador</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ HOME ══════════════ -->
+    <div id="screen-home" class="screen">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <div class="logo-mark sm"><i class="ti ti-school"></i></div>
+          <span class="topbar-name">ULEAM Encuestas</span>
+        </div>
+        <div class="topbar-right">
+          <span class="topbar-greeting" id="topbar-greeting"></span>
+          <button
+            class="btn-icon-top"
+            id="btn-logout-home"
+            aria-label="Cerrar sesión"
+          >
+            <i class="ti ti-logout"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="home-hero">
+        <div class="hero-deco d1"></div>
+        <div class="hero-deco d2"></div>
+        <div class="hero-content">
+          <span class="hero-role-badge" id="hero-role-badge"></span>
+          <h1 id="hero-title">Tus encuestas pendientes</h1>
+        </div>
+      </div>
+
+      <div class="home-body">
+        <div class="stats-row">
+          <div class="stat-chip">
+            <span class="stat-num" id="stat-pending">0</span
+            ><span class="stat-lbl">Pendientes</span>
+          </div>
+          <div class="stat-chip">
+            <span class="stat-num" id="stat-done">0</span
+            ><span class="stat-lbl">Respondidas</span>
+          </div>
+          <div class="stat-chip">
+            <span class="stat-num" id="stat-pct">0%</span
+            ><span class="stat-lbl">Completado</span>
+          </div>
+        </div>
+
+        <div id="panel-pendientes">
+          <p class="section-label">Encuestas disponibles</p>
+          <div id="encuestas-list" class="encuestas-list"></div>
+        </div>
+
+        <div id="panel-historial" class="hidden">
+          <p class="section-label">Encuestas respondidas</p>
+          <div id="historial-list" class="encuestas-list"></div>
+        </div>
+      </div>
+
+      <nav class="bottom-nav" aria-label="Navegación">
+        <button class="nav-item active" data-tab="inicio">
+          <i class="ti ti-home"></i><span>Inicio</span>
+        </button>
+        <button class="nav-item" data-tab="historial">
+          <i class="ti ti-history"></i><span>Historial</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- ══════════════ RESPONDER ENCUESTA ══════════════ -->
+    <div id="screen-survey" class="screen">
+      <header class="survey-topbar">
+        <button class="btn-back" id="btn-back-survey" aria-label="Volver">
+          <i class="ti ti-arrow-left"></i> Volver
+        </button>
+        <h2 id="survey-topbar-title" class="survey-topbar-title"></h2>
+      </header>
+      <div
+        class="survey-progress-track"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        id="survey-progress-bar"
+      >
+        <div class="survey-progress-fill" id="survey-progress-fill"></div>
+      </div>
+      <div class="survey-enc-header">
+        <h3 id="survey-title"></h3>
+        <div id="survey-badges" class="survey-badges"></div>
+      </div>
+      <div class="survey-body" id="survey-body"></div>
+      <div class="survey-footer">
+        <button
+          class="btn btn-outline"
+          id="btn-prev-q"
+          disabled
+          aria-label="Anterior"
+        >
+          <i class="ti ti-arrow-left"></i>
+        </button>
+        <span
+          class="survey-progress-text"
+          id="survey-progress-text"
+          aria-live="polite"
+        ></span>
+        <button class="btn btn-primary" id="btn-next-q">
+          Siguiente <i class="ti ti-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════ CONFIRMACIÓN ══════════════ -->
+    <div id="screen-confirm" class="screen">
+      <div class="confirm-wrap">
+        <div class="confirm-icon"><i class="ti ti-circle-check"></i></div>
+        <h2>¡Encuesta enviada!</h2>
+        <p>
+          Tu respuesta ha sido registrada exitosamente. Gracias por participar y
+          contribuir a la mejora de la ULEAM.
+        </p>
+        <button class="btn btn-primary" id="btn-back-home">
+          Volver al inicio
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════ ADMIN ══════════════ -->
+    <div id="screen-admin" class="screen">
+      <div class="admin-layout">
+        <aside class="admin-sidebar" aria-label="Menú administración">
+          <div class="sb-top">
+            <div class="logo-mark sm"><i class="ti ti-school"></i></div>
+            <div class="sb-brand">
+              <span class="sb-name">Encuestas ULEAM</span>
+              <span class="sb-sub">Administración</span>
+            </div>
+          </div>
+          <nav class="sb-nav">
+            <span class="sb-sec-lbl">Principal</span>
+            <button class="sb-link active" data-tab="dashboard">
+              <i class="ti ti-layout-dashboard"></i><span>Dashboard</span>
+            </button>
+            <button class="sb-link" data-tab="encuestas">
+              <i class="ti ti-clipboard-list"></i><span>Encuestas</span>
+            </button>
+            <span class="sb-sec-lbl">Sistema</span>
+            <button class="sb-link" data-tab="configuracion">
+              <i class="ti ti-settings"></i><span>Configuración</span>
+            </button>
+          </nav>
+          <button class="sb-logout" id="btn-logout-admin">
+            <i class="ti ti-logout"></i><span>Cerrar sesión</span>
+          </button>
+        </aside>
+
+        <main class="admin-main">
+          <div class="admin-topbar">
+            <h2 class="admin-page-title" id="admin-page-title">Dashboard</h2>
+            <div id="admin-topbar-actions"></div>
+          </div>
+
+          <!-- ── DASHBOARD ── -->
+          <div id="tab-dashboard" class="admin-tab active">
+            <div class="dash-body">
+              <div class="kpi-grid">
+                <div class="kpi-card">
+                  <div class="kpi-icon blue">
+                    <i class="ti ti-clipboard-list"></i>
+                  </div>
+                  <div class="kpi-num">12</div>
+                  <div class="kpi-lbl">Encuestas activas</div>
+                  <div class="kpi-delta up">
+                    <i class="ti ti-trending-up"></i> +3 este mes
+                  </div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-icon green"><i class="ti ti-check"></i></div>
+                  <div class="kpi-num">2,847</div>
+                  <div class="kpi-lbl">Respuestas totales</div>
+                  <div class="kpi-delta up">
+                    <i class="ti ti-trending-up"></i> +124 esta semana
+                  </div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-icon purple">
+                    <i class="ti ti-percent"></i>
+                  </div>
+                  <div class="kpi-num">68%</div>
+                  <div class="kpi-lbl">Tasa de respuesta</div>
+                  <div class="kpi-delta up">
+                    <i class="ti ti-trending-up"></i> +5% vs anterior
+                  </div>
+                </div>
+                <div class="kpi-card warn">
+                  <div class="kpi-icon orange">
+                    <i class="ti ti-bell-ringing"></i>
+                  </div>
+                  <div class="kpi-num">3</div>
+                  <div class="kpi-lbl">Cierran en 2 días</div>
+                  <div class="kpi-delta down">
+                    <i class="ti ti-send"></i> Recordatorios enviados
+                  </div>
+                </div>
+              </div>
+
+              <div class="tipo-row">
+                <div class="tipo-pill blue">
+                  <i class="ti ti-school"></i>
+                  <div>
+                    <div class="tipo-num">8</div>
+                    <div class="tipo-lbl">Para estudiantes</div>
+                  </div>
+                </div>
+                <div class="tipo-pill purple">
+                  <i class="ti ti-chalkboard"></i>
+                  <div>
+                    <div class="tipo-num">3</div>
+                    <div class="tipo-lbl">Para docentes</div>
+                  </div>
+                </div>
+                <div class="tipo-pill green">
+                  <i class="ti ti-briefcase"></i>
+                  <div>
+                    <div class="tipo-num">1</div>
+                    <div class="tipo-lbl">Personal administrativo</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-two-col">
+                <div class="dash-panel">
+                  <div class="dash-panel-hd">
+                    <h3>
+                      <i class="ti ti-building-community"></i> Participación por
+                      facultad
+                    </h3>
+                  </div>
+                  <div id="fac-bars"></div>
+                </div>
+                <div class="dash-panel">
+                  <div class="dash-panel-hd">
+                    <h3><i class="ti ti-users"></i> Participación por tipo</h3>
+                  </div>
+                  <div id="tipo-bars"></div>
+                  <div class="auto-reminder-box">
+                    <div class="auto-reminder-icon">
+                      <i class="ti ti-bell-ringing"></i>
+                    </div>
+                    <div>
+                      <p class="auto-reminder-title">
+                        Recordatorio automático activo
+                      </p>
+                      <p class="auto-reminder-sub">
+                        El sistema envía recordatorios automáticamente a
+                        usuarios sin responder cuando faltan 2 días para el
+                        cierre de cada encuesta.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-panel" style="margin-top: 12px">
+                <div class="dash-panel-hd">
+                  <h3><i class="ti ti-list"></i> Encuestas recientes</h3>
+                  <button class="link-ver-todas" id="link-ver-todas">
+                    Ver todas <i class="ti ti-arrow-right"></i>
+                  </button>
+                </div>
+                <div class="enc-table-wrap">
+                  <table class="enc-table" aria-label="Encuestas recientes">
+                    <thead>
+                      <tr>
+                        <th>Encuesta</th>
+                        <th>Dirigida a</th>
+                        <th>Estado</th>
+                        <th>Respuestas</th>
+                        <th>Cierre</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dash-enc-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── ENCUESTAS ── -->
+          <div id="tab-encuestas" class="admin-tab hidden">
+            <div class="enc-toolbar">
+              <div class="search-wrap">
+                <i class="ti ti-search"></i>
+                <input
+                  type="text"
+                  class="field-input search-input"
+                  id="enc-search"
+                  placeholder="Buscar encuesta..."
+                  aria-label="Buscar"
+                />
+              </div>
+              <select
+                class="field-input sm-sel"
+                id="enc-filter-status"
+                aria-label="Filtrar por estado"
+              >
+                <option value="all">Todos los estados</option>
+                <option value="active">Activas</option>
+                <option value="draft">Borrador</option>
+                <option value="closed">Cerradas</option>
+                <option value="finished">Finalizadas</option>
+              </select>
+              <button class="btn btn-primary btn-sm" id="btn-nueva-enc">
+                <i class="ti ti-plus"></i> Nueva encuesta
+              </button>
+            </div>
+            <div class="enc-table-wrap">
+              <table class="enc-table" aria-label="Encuestas">
+                <thead>
+                  <tr>
+                    <th>Encuesta</th>
+                    <th>Dirigida a</th>
+                    <th>Estado</th>
+                    <th>Respuestas</th>
+                    <th>Cierre</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="enc-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ── CREAR / EDITAR ── -->
+          <div id="tab-crear" class="admin-tab hidden">
+            <div class="crear-steps">
+              <div class="cstep done" data-step="1">
+                <span class="cstep-num"><i class="ti ti-check"></i></span
+                ><span class="cstep-lbl">Información</span>
+              </div>
+              <div class="cstep-line"></div>
+              <div class="cstep active" data-step="2">
+                <span class="cstep-num">2</span
+                ><span class="cstep-lbl">Audiencia</span>
+              </div>
+              <div class="cstep-line"></div>
+              <div class="cstep" data-step="3">
+                <span class="cstep-num">3</span
+                ><span class="cstep-lbl">Preguntas</span>
+              </div>
+              <div class="cstep-line"></div>
+              <div class="cstep" data-step="4">
+                <span class="cstep-num">4</span
+                ><span class="cstep-lbl">Revisión</span>
+              </div>
+            </div>
+
+            <div class="crear-layout">
+              <div class="crear-main">
+                <div class="crear-card">
+                  <div class="crear-card-hd">
+                    <i class="ti ti-info-circle"></i> Información general
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label" for="enc-titulo"
+                      >Título <span class="req">*</span></label
+                    >
+                    <input
+                      type="text"
+                      id="enc-titulo"
+                      class="field-input"
+                      placeholder="Ej: Evaluación del servicio de biblioteca"
+                    />
+                    <span
+                      class="field-error"
+                      id="err-titulo"
+                      role="alert"
+                    ></span>
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label" for="enc-desc"
+                      >Descripción</label
+                    >
+                    <textarea
+                      id="enc-desc"
+                      class="field-input"
+                      rows="3"
+                      placeholder="Explica brevemente el propósito..."
+                    ></textarea>
+                  </div>
+                  <div class="field-row-2">
+                    <div class="field-group">
+                      <label class="field-label" for="enc-fecha-inicio"
+                        >Inicio <span class="req">*</span></label
+                      >
+                      <input
+                        type="date"
+                        id="enc-fecha-inicio"
+                        class="field-input"
+                      />
+                      <span
+                        class="field-error"
+                        id="err-fecha-inicio"
+                        role="alert"
+                      ></span>
+                    </div>
+                    <div class="field-group">
+                      <label class="field-label" for="enc-fecha-fin"
+                        >Cierre <span class="req">*</span></label
+                      >
+                      <input
+                        type="date"
+                        id="enc-fecha-fin"
+                        class="field-input"
+                      />
+                      <span
+                        class="field-error"
+                        id="err-fecha-fin"
+                        role="alert"
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="crear-card">
+                  <div class="crear-card-hd">
+                    <i class="ti ti-users"></i> ¿A quién va dirigida?
+                  </div>
+                  <span
+                    class="field-error"
+                    id="err-audiencia"
+                    role="alert"
+                  ></span>
+                  <div class="audience-grid">
+                    <div
+                      class="aud-opt"
+                      data-audience="estudiantes"
+                      tabindex="0"
+                      role="button"
+                      aria-pressed="false"
+                    >
+                      <div class="aud-icon"><i class="ti ti-school"></i></div>
+                      <div>
+                        <div class="aud-title">Estudiantes</div>
+                        <div class="aud-sub">~15,000 alumnos matriculados</div>
+                      </div>
+                    </div>
+                    <div
+                      class="aud-opt"
+                      data-audience="docentes"
+                      tabindex="0"
+                      role="button"
+                      aria-pressed="false"
+                    >
+                      <div class="aud-icon">
+                        <i class="ti ti-chalkboard"></i>
+                      </div>
+                      <div>
+                        <div class="aud-title">Docentes</div>
+                        <div class="aud-sub">~1,800 docentes ULEAM</div>
+                      </div>
+                    </div>
+                    <div
+                      class="aud-opt"
+                      data-audience="administrativo"
+                      tabindex="0"
+                      role="button"
+                      aria-pressed="false"
+                    >
+                      <div class="aud-icon">
+                        <i class="ti ti-briefcase"></i>
+                      </div>
+                      <div>
+                        <div class="aud-title">Personal administrativo</div>
+                        <div class="aud-sub">~800 trabajadores ULEAM</div>
+                      </div>
+                    </div>
+                    <div
+                      class="aud-opt"
+                      data-audience="todos"
+                      tabindex="0"
+                      role="button"
+                      aria-pressed="false"
+                    >
+                      <div class="aud-icon">
+                        <i class="ti ti-users-group"></i>
+                      </div>
+                      <div>
+                        <div class="aud-title">Toda la comunidad</div>
+                        <div class="aud-sub">Sin restricción de rol</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="filter-row" style="margin-top: 12px">
+                    <div class="field-group" style="margin-bottom: 0; flex: 1">
+                      <label class="field-label" for="enc-facultad"
+                        >Facultad específica (opcional)</label
+                      >
+                      <select id="enc-facultad" class="field-input">
+                        <option value="">Todas las facultades</option>
+                        <option>Ciencias Informáticas</option>
+                        <option>Medicina</option>
+                        <option>Derecho</option>
+                        <option>Ciencias Administrativas</option>
+                        <option>Ciencias Agropecuarias</option>
+                        <option>Arquitectura</option>
+                        <option>Enfermería</option>
+                        <option>Odontología</option>
+                        <option>Trabajo Social</option>
+                        <option>Comunicación</option>
+                      </select>
+                    </div>
+                    <div class="field-group" style="margin-bottom: 0; flex: 1">
+                      <label class="field-label" for="enc-semestre"
+                        >Semestre (opcional)</label
+                      >
+                      <select id="enc-semestre" class="field-input">
+                        <option value="">Todos</option>
+                        <option>1.° semestre</option>
+                        <option>2.° semestre</option>
+                        <option>3.° semestre</option>
+                        <option>4.° semestre</option>
+                        <option>5.° en adelante</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="crear-card">
+                  <div
+                    class="crear-card-hd"
+                    style="justify-content: space-between"
+                  >
+                    <span><i class="ti ti-list-check"></i> Preguntas</span>
+                    <span class="badge-count" id="q-count-badge"
+                      >0 preguntas</span
+                    >
+                  </div>
+                  <span
+                    class="field-error"
+                    id="err-preguntas"
+                    role="alert"
+                  ></span>
+                  <div id="questions-list"></div>
+                  <button class="add-q-btn" id="btn-add-question" type="button">
+                    <i class="ti ti-plus"></i> Agregar pregunta
+                  </button>
+                </div>
+              </div>
+
+              <div class="crear-side">
+                <div class="preview-card">
+                  <div class="preview-banner" id="preview-banner">
+                    <i
+                      class="ti ti-clipboard-list"
+                      style="font-size: 38px; opacity: 0.3; color: #fff"
+                    ></i>
+                    <div
+                      class="preview-banner-change"
+                      id="btn-change-img"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <i class="ti ti-photo"></i> Cambiar imagen
+                    </div>
+                  </div>
+                  <div class="preview-body">
+                    <p class="preview-lbl">Vista previa</p>
+                    <p class="preview-title" id="prev-title">
+                      Título de la encuesta
+                    </p>
+                    <p class="preview-desc" id="prev-desc">
+                      La descripción aparecerá aquí...
+                    </p>
+                    <div class="preview-tags" id="prev-tags">
+                      <span class="ptag blue"
+                        ><i class="ti ti-users"></i> Audiencia</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="config-box">
+                  <div class="config-box-hd">
+                    <i class="ti ti-adjustments"></i> Configuración
+                  </div>
+                  <div class="toggle-item">
+                    <div>
+                      <div class="tgl-lbl">Encuesta anónima</div>
+                      <div class="tgl-sub">No vincular al usuario</div>
+                    </div>
+                    <div
+                      class="tgl-switch on"
+                      data-toggle="anonima"
+                      tabindex="0"
+                      role="switch"
+                      aria-checked="true"
+                    ></div>
+                  </div>
+                  <div class="toggle-item">
+                    <div>
+                      <div class="tgl-lbl">Una sola respuesta</div>
+                      <div class="tgl-sub">Bloquear si ya respondió</div>
+                    </div>
+                    <div
+                      class="tgl-switch on"
+                      data-toggle="unica"
+                      tabindex="0"
+                      role="switch"
+                      aria-checked="true"
+                    ></div>
+                  </div>
+                  <div class="toggle-item">
+                    <div>
+                      <div class="tgl-lbl">Mostrar resultados</div>
+                      <div class="tgl-sub">Visible al finalizar</div>
+                    </div>
+                    <div
+                      class="tgl-switch"
+                      data-toggle="resultados"
+                      tabindex="0"
+                      role="switch"
+                      aria-checked="false"
+                    ></div>
+                  </div>
+                  <div class="toggle-item">
+                    <div>
+                      <div class="tgl-lbl">Notificar al publicar</div>
+                      <div class="tgl-sub">Avisar por correo institucional</div>
+                    </div>
+                    <div
+                      class="tgl-switch on"
+                      data-toggle="notificar"
+                      tabindex="0"
+                      role="switch"
+                      aria-checked="true"
+                    ></div>
+                  </div>
+                  <div class="toggle-item">
+                    <div>
+                      <div class="tgl-lbl">Recordatorio automático</div>
+                      <div class="tgl-sub">2 días antes del cierre</div>
+                    </div>
+                    <div
+                      class="tgl-switch on"
+                      data-toggle="recordatorio"
+                      tabindex="0"
+                      role="switch"
+                      aria-checked="true"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="config-box">
+                  <div class="config-box-hd">
+                    <i class="ti ti-photo"></i> Imagen de portada
+                  </div>
+                  <div
+                    class="img-upload-area"
+                    id="img-upload-area"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <i class="ti ti-cloud-upload"></i>
+                    <p>Subir imagen o elegir de galería</p>
+                    <p class="img-upload-hint">PNG, JPG · máx. 2 MB</p>
+                  </div>
+                </div>
+
+                <div class="crear-actions">
+                  <button class="btn btn-outline btn-full" id="btn-save-draft">
+                    <i class="ti ti-device-floppy"></i> Guardar borrador
+                  </button>
+                  <button class="btn btn-primary btn-full" id="btn-publish-enc">
+                    <i class="ti ti-send"></i> Publicar encuesta
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── CONFIGURACIÓN ── -->
+          <div id="tab-configuracion" class="admin-tab hidden">
+            <div class="cfg-layout">
+              <div class="crear-card">
+                <div class="crear-card-hd">
+                  <i class="ti ti-user-circle"></i> Perfil del administrador
+                </div>
+                <div class="field-row-2">
+                  <div class="field-group">
+                    <label class="field-label" for="cfg-nombre"
+                      >Nombre completo</label
+                    >
+                    <input
+                      type="text"
+                      id="cfg-nombre"
+                      class="field-input"
+                      value="Carlos Rodríguez"
+                    />
+                    <span
+                      class="field-error"
+                      id="err-cfg-nombre"
+                      role="alert"
+                    ></span>
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label" for="cfg-email"
+                      >Correo institucional</label
+                    >
+                    <input
+                      type="email"
+                      id="cfg-email"
+                      class="field-input"
+                      value="c.rodriguez@live.uleam.edu.ec"
+                    />
+                    <span
+                      class="field-error"
+                      id="err-cfg-email"
+                      role="alert"
+                    ></span>
+                  </div>
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="cfg-cargo">Cargo</label>
+                  <input
+                    type="text"
+                    id="cfg-cargo"
+                    class="field-input"
+                    value="Coordinador de calidad académica"
+                  />
+                </div>
+                <div class="row-actions">
+                  <button class="btn btn-primary btn-sm" id="btn-save-perfil">
+                    Guardar cambios
+                  </button>
+                  <span class="field-success hidden" id="success-perfil"
+                    ><i class="ti ti-check"></i> Cambios guardados</span
+                  >
+                </div>
+              </div>
+
+              <div class="crear-card">
+                <div class="crear-card-hd">
+                  <i class="ti ti-lock"></i> Cambiar contraseña
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="cfg-pwd-actual"
+                    >Contraseña actual</label
+                  >
+                  <input
+                    type="password"
+                    id="cfg-pwd-actual"
+                    class="field-input"
+                    placeholder="••••••••"
+                  />
+                  <span
+                    class="field-error"
+                    id="err-pwd-actual"
+                    role="alert"
+                  ></span>
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="cfg-pwd-nueva"
+                    >Nueva contraseña</label
+                  >
+                  <input
+                    type="password"
+                    id="cfg-pwd-nueva"
+                    class="field-input"
+                    placeholder="Ej: Segura2026#"
+                  />
+                  <span class="field-hint"
+                    >Inicia con mayúscula, mín. 8 caracteres, incluye
+                    número.</span
+                  >
+                  <span
+                    class="field-error"
+                    id="err-pwd-nueva"
+                    role="alert"
+                  ></span>
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="cfg-pwd-confirm"
+                    >Confirmar contraseña</label
+                  >
+                  <input
+                    type="password"
+                    id="cfg-pwd-confirm"
+                    class="field-input"
+                    placeholder="••••••••"
+                  />
+                  <span
+                    class="field-error"
+                    id="err-pwd-confirm"
+                    role="alert"
+                  ></span>
+                </div>
+                <div class="row-actions">
+                  <button class="btn btn-primary btn-sm" id="btn-change-pwd">
+                    Cambiar contraseña
+                  </button>
+                  <span class="field-success hidden" id="success-pwd"
+                    ><i class="ti ti-check"></i> Contraseña actualizada</span
+                  >
+                </div>
+              </div>
+
+              <div class="crear-card">
+                <div class="crear-card-hd">
+                  <i class="ti ti-building-community"></i> Gestión de facultades
+                </div>
+                <div id="facultades-list" class="facultades-list"></div>
+                <div class="field-row-2" style="margin-top: 10px">
+                  <input
+                    type="text"
+                    id="new-facultad-input"
+                    class="field-input"
+                    placeholder="Nueva facultad..."
+                  />
+                  <button class="btn btn-primary btn-sm" id="btn-add-facultad">
+                    <i class="ti ti-plus"></i> Agregar
+                  </button>
+                </div>
+                <span class="field-error" id="err-facultad" role="alert"></span>
+              </div>
+
+              <div class="crear-card">
+                <div class="crear-card-hd">
+                  <i class="ti ti-settings"></i> Preferencias del sistema
+                </div>
+
+                <div class="pref-row">
+                  <div class="pref-info">
+                    <div class="pref-lbl">
+                      <i class="ti ti-language"></i> Idioma del sistema
+                    </div>
+                    <div class="pref-sub">Idioma de la interfaz</div>
+                  </div>
+                  <select class="field-input sm-sel" id="pref-idioma">
+                    <option value="es" selected>Español</option>
+                    <option value="en">English</option>
+                  </select>
+                </div>
+
+                <div class="pref-row">
+                  <div class="pref-info">
+                    <div class="pref-lbl">
+                      <i class="ti ti-sun" id="theme-icon"></i> Tema visual
+                    </div>
+                    <div class="pref-sub">Apariencia de la interfaz</div>
+                  </div>
+                  <div class="theme-toggle-wrap">
+                    <button
+                      class="theme-btn active"
+                      id="theme-light"
+                      aria-pressed="true"
+                    >
+                      <i class="ti ti-sun"></i> Claro
+                    </button>
+                    <button
+                      class="theme-btn"
+                      id="theme-dark"
+                      aria-pressed="false"
+                    >
+                      <i class="ti ti-moon"></i> Oscuro
+                    </button>
+                  </div>
+                </div>
+
+                <div class="pref-row">
+                  <div class="pref-info">
+                    <div class="pref-lbl">
+                      <i class="ti ti-bell"></i> Recordatorio automático
+                    </div>
+                    <div class="pref-sub">Avisar 2 días antes del cierre</div>
+                  </div>
+                  <div
+                    class="tgl-switch on"
+                    data-toggle="sys-reminder"
+                    tabindex="0"
+                    role="switch"
+                    aria-checked="true"
+                  ></div>
+                </div>
+
+                <div class="pref-row">
+                  <div class="pref-info">
+                    <div class="pref-lbl">
+                      <i class="ti ti-mail"></i> Resumen semanal
+                    </div>
+                    <div class="pref-sub">Informe cada lunes al correo</div>
+                  </div>
+                  <div
+                    class="tgl-switch"
+                    data-toggle="sys-resumen"
+                    tabindex="0"
+                    role="switch"
+                    aria-checked="false"
+                  ></div>
+                </div>
+
+                <div class="pref-row" style="border-bottom: none">
+                  <div class="pref-info">
+                    <div class="pref-lbl">
+                      <i class="ti ti-database"></i> Respaldo de información
+                    </div>
+                    <div class="pref-sub">Última copia: 14 may. 2026</div>
+                  </div>
+                  <button class="btn btn-outline btn-sm" id="btn-backup">
+                    <i class="ti ti-download"></i> Respaldar ahora
+                  </button>
+                </div>
+
+                <div
+                  style="
+                    margin-top: 14px;
+                    padding-top: 14px;
+                    border-top: 1px solid var(--border);
+                  "
+                >
+                  <div class="row-actions">
+                    <button class="btn btn-primary btn-sm" id="btn-save-prefs">
+                      Guardar preferencias
+                    </button>
+                    <span class="field-success hidden" id="success-prefs"
+                      ><i class="ti ti-check"></i> Preferencias guardadas</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div
+      id="toast"
+      class="toast hidden"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    ></div>
+
+    <!-- MODAL ELIMINAR -->
+    <div
+      id="modal-delete"
+      class="modal-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-delete-title"
+    >
+      <div class="modal-box">
+        <div class="modal-icon danger"><i class="ti ti-trash"></i></div>
+        <h3 id="modal-delete-title">Eliminar encuesta</h3>
+        <p id="modal-delete-body">
+          ¿Está seguro de que desea eliminar esta encuesta?
+        </p>
+        <div class="modal-btns">
+          <button class="btn btn-outline" id="modal-cancel">Cancelar</button>
+          <button class="btn btn-danger" id="modal-confirm">
+            Sí, eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
